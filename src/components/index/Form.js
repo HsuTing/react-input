@@ -16,12 +16,12 @@ export default class Form extends React.Component {
       })
     ).isRequired,
     children: React.PropTypes.node.isRequired,
-    onChange: React.PropTypes.func
+    change: React.PropTypes.func
   }
 
   static defaultProps = {
     data: [],
-    onChange: data => {
+    change: data => {
       return data;
     }
   }
@@ -49,6 +49,7 @@ export default class Form extends React.Component {
     const props = {...this.props};
 
     delete props.data;
+    delete props.change;
 
     return (
       <form {...props}>
@@ -79,17 +80,17 @@ export default class Form extends React.Component {
     invariant(count === this.state.data.length, 'The length of your data should be equal to the length of your childrens.');
   }
 
-  changeData(index, onChange = () => {}) {
+  changeData(index, nodeChange = () => {}) {
     return data => {
       const newData = [...this.state.data];
 
       Object.keys(data).forEach(key => {
         newData[index][key] = data[key];
       });
-      onChange(data);
+      nodeChange(data);
 
       this.setState({
-        data: this.props.onChange(newData)
+        data: this.props.change(newData) || newData
       });
     };
   }

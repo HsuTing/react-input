@@ -17,7 +17,7 @@ export default class Input extends React.Component {
     defaultValue: React.PropTypes.string,
     title: React.PropTypes.string.isRequired,
     message: React.PropTypes.string,
-    rules: React.PropTypes.string,
+    rule: React.PropTypes.string,
     isError: React.PropTypes.bool,
     onChange: React.PropTypes.func,
     onBlur: React.PropTypes.func
@@ -63,13 +63,13 @@ export default class Input extends React.Component {
   }
 
   render() {
-    const {title, message, rules} = this.props;
+    const {title, message, rule} = this.props;
     const {isError} = this.state;
 
     return (
       <div style={style.root}>
         <h4 style={style.title(isError || this.props.isError)}>
-          <font style={style.isRequired(rules)}>*</font>
+          <font style={style.isRequired(rule)}>*</font>
           {title}
         </h4>
         {this.getComponent()}
@@ -120,12 +120,12 @@ export default class Input extends React.Component {
   }
 
   getProps() {
-    const {rules} = this.props;
+    const {rule} = this.props;
     const {isError} = this.state;
     const props = {...this.props};
-    const propsStyle = [style.input(rules, isError || this.props.isError)];
+    const propsStyle = [style.input(rule, isError || this.props.isError)];
 
-    delete props.rules;
+    delete props.rule;
     delete props.title;
     delete props.message;
     delete props.isError;
@@ -161,11 +161,11 @@ export default class Input extends React.Component {
     const func = type === 'change' ? this.props.onChange : this.props.onBlur;
 
     return e => {
-      const {rules} = this.props;
+      const {rule} = this.props;
       let uploadInfo = '';
       let isError = false;
 
-      switch(rules) {
+      switch(rule) {
         case 'not empty':
           isError = validator.isEmpty(e.target.value);
           break;

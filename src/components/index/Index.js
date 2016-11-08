@@ -23,26 +23,26 @@ export default class Index extends React.Component {
           />
           <Input title="Text(not empty)"
                  placeholder="text"
-                 rules="not empty"
+                 rule="not empty"
                  message="Can not be empty"
           />
           <Input type="email"
                  title="Email"
                  placeholder="email"
-                 rules="email"
+                 rule="email"
                  message="Invalid email"
           />
           <Input type="file"
                  title="File"
                  placeholder="file"
-                 rules="file"
+                 rule="file"
                  message="no file"
                  id="file"
           />
           <Input type="textarea"
                  title="Textarea"
                  placeholder="textarea"
-                 rules="not empty"
+                 rule="not empty"
                  message="Can not be empty"
           />
         </Form>

@@ -47,6 +47,29 @@ class Example extends React.Component {
 }
 ```
 
+#### Form
+
+| props | usage |
+|-------|-------|
+| data | Array of default data. Elemenet in array is an object of `value` and `isError`. `value` is default value of input and `isError` will be `true` when data is error. |
+| change | You will get `data` when every value of input is changed and you can return a `data` when you need to check `data` is correct. |
+
+#### Input
+
+| props | usage |
+|-------|-------|
+| isError | You cans control `isError` using `props`. |
+| rule | The rule of checking data. |
+| type | Type of the input. `default: text` |
+
+- rule
+  - `not empty`: check if value is empty.
+  - `email`: check if value is email.
+  - `file`: check if file have size.
+- type
+  - all type of `input`
+  - `textarea`
+
 ## Develop
 
 First, install packages using [yarn](https://yarnpkg.com/) (we assume you have pre-installed [npm](https://www.npmjs.com/) and [node.js](https://nodejs.org/)).

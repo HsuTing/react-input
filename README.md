@@ -11,7 +11,7 @@ npm install git+https://github.com/HsuTing/react-input.git --save
 
 ## Usage
 
-[demo](http://hsuting.com/react-input/)
+[demo](http://hsuting.com/react-input/) and [code](./src/components/index/Index.js)
 
 #### Components
 
@@ -32,7 +32,7 @@ class Example extends React.Component {
   render() {
     return (
       <Form data={data}
-            onChange={this.onChange}
+            change={this.onChange}
       >
         <Input title="Text"
                placeholder="text"

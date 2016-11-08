@@ -4,13 +4,19 @@ react input
 
 ## Getting Started
 
-First, install packages using [yarn](https://yarnpkg.com/) (we assume you have pre-installed [npm](https://www.npmjs.com/) and [node.js](https://nodejs.org/)).
-
 ```
-yarn install
+npm install react --save
+npm install git+https://github.com/HsuTing/react-input.git --save
 ```
 
 ## Usage
+
+[demo](http://hsuting.com/react-input/)
+
+#### Components
+
+- Form
+- Input
 
 #### Example
 
@@ -41,7 +47,13 @@ class Example extends React.Component {
 }
 ```
 
-## Developer
+## Develop
+
+First, install packages using [yarn](https://yarnpkg.com/) (we assume you have pre-installed [npm](https://www.npmjs.com/) and [node.js](https://nodejs.org/)).
+
+```
+yarn install
+```
 
 You can see `scripts` in `package.json`.
 - `production`: `production` mode.
@@ -71,4 +83,4 @@ All sharing UI components(like `footer` and `header`).
 Some componets need to use `radium` to transform(like `Link` in `react-router`).
 
 ## License
- © hsuting
+MIT © hsuting

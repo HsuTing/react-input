@@ -61,7 +61,7 @@ export default {
 
   placeholder: isError => {
     return {
-      color: isError ? color.red : 'rgb(242, 172, 155)'
+      color: isError ? 'rgb(242, 172, 155)' : 'black'
     };
   },
 

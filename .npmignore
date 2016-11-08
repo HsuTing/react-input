@@ -3,5 +3,6 @@ views
 public
 *.html
 *.config.js
+bin
 !package.json
 !lib

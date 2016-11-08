@@ -12,6 +12,37 @@ yarn install
 
 ## Usage
 
+#### Example
+
+```javascript
+import React from 'react';
+import {Form, Input} from 'react-input';
+
+const data = [
+  {value: '1'}
+];
+
+class Example extends React.Component {
+  render() {
+    return (
+      <Form data={data}
+            onChange={this.onChange}
+      >
+        <Input title="Text"
+               placeholder="text"
+        />
+      </Form>
+    );
+  }
+
+  onChange(data) {
+    return data;
+  }
+}
+```
+
+## Developer
+
 You can see `scripts` in `package.json`.
 - `production`: `production` mode.
 - `watch`: watch files.

@@ -13,20 +13,11 @@ import {data} from './static';
 
 @radium
 export default class Index extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.change = this.change.bind(this);
-    this.showData = this.showData.bind(this);
-  }
-
   render() {
     return (
       <div style={style}>
         <Style />
-        <Form data={data}
-              onChange={this.change}
-        >
+        <Form data={data}>
           <Input title="Text"
                  placeholder="text"
           />
@@ -54,19 +45,8 @@ export default class Index extends React.Component {
                  rules="not empty"
                  message="Can not be empty"
           />
-          <button onClick={this.showData}>submit</button>
         </Form>
       </div>
     );
-  }
-
-  showData() {
-    alert(JSON.stringify(this.state.data));
-  }
-
-  change(data) {
-    const newData = [...data];
-    newData[1].isError = true;
-    return newData;
   }
 }

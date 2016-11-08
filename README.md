@@ -61,6 +61,7 @@ class Example extends React.Component {
 | isError | You cans control `isError` using `props`. |
 | rule | The rule of checking data. |
 | type | Type of the input. `default: text`. |
+| title | Title of input. |
 | message | This will show when `isError` is true. |
 
 - rule

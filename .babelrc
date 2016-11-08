@@ -1,0 +1,23 @@
+{
+  "presets": [
+    "react",
+    "latest",
+    "stage-0"
+  ],
+  "plugins": [
+    "transform-decorators-legacy",
+    "transform-object-assign",
+    ["module-resolver", {
+      "root": ["./src"],
+      "alias": {
+        "utils": "utils",
+        "constants": "constants",
+        "public": "public",
+        "components": "components",
+        "componentsShare": "components/share",
+        "componentsShareRadium": "components/share/radium",
+        "componentsIndex": "components/index"
+      }
+    }]
+  ]
+}

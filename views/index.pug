@@ -1,0 +1,31 @@
+include head/meta.pug
+
+- var ENV = process.env.NODE_ENV === 'production'
+- var domain = ENV ? 'http://hsuting.com/react-input' : 'http://localhost'
+
+doctype html
+html
+  head
+    //- Reference: https://github.com/joshbuchea/HEAD
+    +setMeta(domain)
+
+    title index
+
+    link(rel="canonical" href=domain+"")
+    link(rel="author" href="")
+    link(rel="copyright" href="/blob/master/LICENSE")
+
+    include head/favicon.pug
+
+
+  body
+    main(id="root") !{markup}
+
+- if(ENV)
+  script(defer, src="/public/js/common.min.js", type="text/javascript")
+  script(defer, src="/public/js/index.min.js", type="text/javascript")
+- else
+  script(defer, src="http://localhost:8080/webpack-dev-server.js", type="text/javascript")
+  script(defer, src="http://localhost:8080/assets/common.js", type="text/javascript")
+  script(defer, src="http://localhost:8080/assets/index.js", type="text/javascript")
+

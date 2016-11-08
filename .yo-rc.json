@@ -1,0 +1,38 @@
+{
+  "generator-cat": {
+    "names": [
+      "index"
+    ],
+    "alias": [
+      {
+        "key": "utils",
+        "value": "utils"
+      },
+      {
+        "key": "constants",
+        "value": "constants"
+      },
+      {
+        "key": "public",
+        "value": "public"
+      },
+      {
+        "key": "components",
+        "value": "components"
+      },
+      {
+        "key": "componentsShare",
+        "value": "components/share"
+      },
+      {
+        "key": "componentsShareRadium",
+        "value": "components/share/radium"
+      },
+      {
+        "key": "componentsIndex",
+        "value": "components/index"
+      }
+    ],
+    "gitignore": []
+  }
+}

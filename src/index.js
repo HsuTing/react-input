@@ -1,4 +1,4 @@
 'use strict'
 
 export Input from 'componentsIndex/Input';
-export Form from 'componetsIndex/Form';
+export Form from 'componentsIndex/Form';

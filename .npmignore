@@ -6,3 +6,4 @@ public
 bin
 !package.json
 !lib
+yarn.lock

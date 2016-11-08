@@ -59,8 +59,10 @@ export default {
     display: 'none'
   },
 
-  placeholder: {
-    color: '#828282'
+  placeholder: isError => {
+    return {
+      color: isError ? color.red : '#828282'
+    };
   },
 
   message: {

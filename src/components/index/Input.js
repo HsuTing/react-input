@@ -90,7 +90,7 @@ export default class Input extends React.Component {
 
       case 'file': {
         const {placeholder, id} = this.props;
-        const {uploadInfo} = this.state;
+        const {uploadInfo, isError} = this.state;
         const hasValue = this.state.uploadInfo !== '';
 
         delete props.id;
@@ -103,7 +103,7 @@ export default class Input extends React.Component {
                  key="label"
                  style={[props.style, {
                    height: 'initial'
-                 }, hasValue ? {} : style.placeholder]}
+                 }, hasValue ? {} : style.placeholder(isError || this.props.isError)]}
           >{hasValue ? uploadInfo : placeholder}</label>,
           <input type="file"
                  key="input"

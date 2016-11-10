@@ -13,7 +13,7 @@
     "babel:watch": "rm -rf ./lib && babel -w src --out-dir lib"
   },
   "name": "react-input",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "react input",
   "author": {
     "name": "hsuting",

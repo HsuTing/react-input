@@ -16,7 +16,6 @@ export default class Input extends React.Component {
     onChange: React.PropTypes.func,
     onBlur: React.PropTypes.func,
     value: React.PropTypes.string,
-    defaultValue: React.PropTypes.string,
     style: React.PropTypes.object,
     titleStyle: React.PropTypes.object,
     messageStyle: React.PropTypes.object,
@@ -44,7 +43,8 @@ export default class Input extends React.Component {
     this.state = {
       isError: false,
       message: '',
-      uploadInfo: ''
+      uploadInfo: '',
+      value: ''
     };
 
     this.getComponent = this.getComponent.bind(this);
@@ -55,15 +55,15 @@ export default class Input extends React.Component {
   }
 
   componentDidMount() {
-    const {rules, value, defaultValue} = this.props;
+    const {rules, value} = this.props;
 
-    if(rules) {
+    if(rules && value && value !== '') {
       this.validator()({
         target: {
-          value: value || defaultValue || '',
+          value: value || '',
           files: [
             {
-              name: value || defaultValue || '',
+              name: value || '',
               size: 0
             }
           ]
@@ -79,7 +79,7 @@ export default class Input extends React.Component {
     return (
       <div style={style.root}>
         <h4 style={[style.title(isError), titleStyle]}>
-          <font style={style.isRequired(rules)}>*</font>
+          <font style={style.isRequired(rules.length !== 0)}>*</font>
           {title}
         </h4>
         {this.getComponent()}
@@ -130,7 +130,7 @@ export default class Input extends React.Component {
   }
 
   getProps() {
-    const {isError} = this.state;
+    const {isError, value} = this.state;
     const {rules, ...props} = this.props;
     const propsStyle = [style.input(rules, isError)];
 
@@ -158,7 +158,8 @@ export default class Input extends React.Component {
     const newProps = Object.assign({}, props, {
       style: [propsStyle, props.style],
       onChange: this.onChange,
-      onBlur: this.onBlur
+      onBlur: this.onBlur,
+      value
     });
 
     return newProps;
@@ -210,7 +211,7 @@ export default class Input extends React.Component {
 
       func({value: e.target.value, isError, e});
 
-      this.setState({isError, uploadInfo, message});
+      this.setState({isError, uploadInfo, message, value: e.target.value});
     };
   }
 }

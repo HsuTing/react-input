@@ -1,12 +1,10 @@
 'use strict';
 
 import React from 'react';
-import radium from 'radium';
 import invariant from 'invariant';
 
 import Input from './Input';
 
-@radium
 export default class Form extends React.Component {
   static propTypes = {
     data: React.PropTypes.arrayOf(

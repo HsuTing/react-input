@@ -13,21 +13,27 @@ export default class Input extends React.Component {
     id: React.PropTypes.string,
     type: React.PropTypes.string,
     placeholder: React.PropTypes.string,
+    onChange: React.PropTypes.func,
+    onBlur: React.PropTypes.func,
     value: React.PropTypes.string,
     defaultValue: React.PropTypes.string,
     style: React.PropTypes.object,
     titleStyle: React.PropTypes.object,
     messageStyle: React.PropTypes.object,
     title: React.PropTypes.string.isRequired,
-    message: React.PropTypes.string,
-    rule: React.PropTypes.string,
-    isError: React.PropTypes.bool,
-    onChange: React.PropTypes.func,
-    onBlur: React.PropTypes.func
+    rules: React.PropTypes.arrayOf(
+      React.PropTypes.shape({
+        validator: React.PropTypes.oneOfType([
+          React.PropTypes.string,
+          React.PropTypes.func
+        ]),
+        message: React.PropTypes.string
+      })
+    )
   }
 
   static defaultProps = {
-    isError: false,
+    rules: [],
     type: 'text',
     onChange: () => {},
     onBlur: () => {}
@@ -36,27 +42,28 @@ export default class Input extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isError: this.props.isError,
+      isError: false,
+      message: '',
       uploadInfo: ''
     };
 
     this.getComponent = this.getComponent.bind(this);
     this.getProps = this.getProps.bind(this);
     this.validator = this.validator.bind(this);
-    this.onChange = this.validator('change').bind(this);
-    this.onBlur = this.validator('blur').bind(this);
+    this.onChange = this.validator(this.props.onChange).bind(this);
+    this.onBlur = this.validator(this.props.onBlur).bind(this);
   }
 
   componentDidMount() {
-    const {value, defaultValue} = this.props;
+    const {rules, value, defaultValue} = this.props;
 
-    if(value || defaultValue) {
-      this.onChange({
+    if(rules) {
+      this.validator()({
         target: {
-          value: value || defaultValue,
+          value: value || defaultValue || '',
           files: [
             {
-              name: value || defaultValue,
+              name: value || defaultValue || '',
               size: 0
             }
           ]
@@ -66,18 +73,18 @@ export default class Input extends React.Component {
   }
 
   render() {
-    const {title, message, rule, titleStyle, messageStyle} = this.props;
-    const {isError} = this.state;
+    const {title, rules, titleStyle, messageStyle} = this.props;
+    const {isError, message} = this.state;
 
     return (
       <div style={style.root}>
-        <h4 style={[style.title(isError || this.props.isError), titleStyle]}>
-          <font style={style.isRequired(rule)}>*</font>
+        <h4 style={[style.title(isError), titleStyle]}>
+          <font style={style.isRequired(rules)}>*</font>
           {title}
         </h4>
         {this.getComponent()}
         <div style={style.message.root}>
-          <p style={[style.message.text(isError || this.props.isError), messageStyle]}>{message}</p>
+          <p style={[style.message.text(isError), messageStyle]}>{message}</p>
         </div>
       </div>
     );
@@ -106,7 +113,7 @@ export default class Input extends React.Component {
                  key="label"
                  style={[props.style, {
                    height: 'initial'
-                 }, hasValue ? {} : style.placeholder(isError || this.props.isError)]}
+                 }, hasValue ? {} : style.placeholder(isError)]}
           >{hasValue ? uploadInfo : placeholder}</label>,
           <input type="file"
                  key="input"
@@ -123,15 +130,11 @@ export default class Input extends React.Component {
   }
 
   getProps() {
-    const {rule} = this.props;
     const {isError} = this.state;
-    const props = {...this.props};
-    const propsStyle = [style.input(rule, isError || this.props.isError)];
+    const {rules, ...props} = this.props;
+    const propsStyle = [style.input(rules, isError)];
 
-    delete props.rule;
     delete props.title;
-    delete props.message;
-    delete props.isError;
     delete props.titleStyle;
     delete props.messageStyle;
 
@@ -161,45 +164,53 @@ export default class Input extends React.Component {
     return newProps;
   }
 
-  validator(type) {
-    const func = type === 'change' ? this.props.onChange : this.props.onBlur;
-
+  validator(func = () => {}) {
     return e => {
-      const {rule} = this.props;
+      const {rules} = this.props;
       let uploadInfo = '';
       let isError = false;
+      let message = '';
 
-      switch(rule) {
-        case 'not empty':
-          isError = validator.isEmpty(e.target.value);
-          break;
+      rules.forEach(rule => {
+        if(isError)
+          return;
 
-        case 'email': {
-          const email = validator.normalizeEmail(e.target.value);
-          if(!email)
-            isError = true;
-          break;
+        switch(rule.validator) {
+          case 'not empty':
+            isError = validator.isEmpty(e.target.value);
+            break;
+
+          case 'email': {
+            const email = validator.normalizeEmail(e.target.value);
+            if(!email)
+              isError = true;
+            break;
+          }
+
+          case 'file':
+            if(e.target.files.length !== 0) {
+              const file = e.target.files[0];
+
+              if(file.size === 0)
+                isError = true;
+
+              uploadInfo = `${file.name} (${Math.round(file.size * 0.001)} KB)`;
+            } else
+              isError = true;
+            break;
+
+          default:
+            isError = rule.validator(e) || false;
+            break;
         }
 
-        case 'file':
-          if(e.target.files.length !== 0) {
-            const file = e.target.files[0];
+        if(isError)
+          message = rule.message;
+      });
 
-            if(file.size === 0)
-              isError = true;
+      func({value: e.target.value, isError, e});
 
-            uploadInfo = `${file.name} (${Math.round(file.size * 0.001)} KB)`;
-          } else
-            isError = true;
-          break;
-
-        default:
-          break;
-      }
-
-      func({value: e.target.value, isError, target: e.target});
-
-      this.setState({isError, uploadInfo});
+      this.setState({isError, uploadInfo, message});
     };
   }
 }

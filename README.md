@@ -32,7 +32,7 @@ class Example extends React.Component {
   render() {
     return (
       <Form data={data}
-            change={this.onChange}
+            change={this.change}
       >
         <Input title="Text"
                placeholder="text"
@@ -41,8 +41,8 @@ class Example extends React.Component {
     );
   }
 
-  onChange(data) {
-    return data;
+  change(data) {
+    console.log(data);
   }
 }
 ```
@@ -51,26 +51,39 @@ class Example extends React.Component {
 
 | props | usage |
 |-------|-------|
-| data | Array of default data. Elemenet in array is an object of `value` and `isError`. `value` is default value of input and `isError` will be `true` when data is error. |
-| change | You will get `data` when every value of input is changed and you can return a `data` when you need to check `data` is correct. |
+| data | Array of default data. Every elemenet is an object of `value` and `isError`. `value` is default value of input and `isError` will be `true` when data is error. |
+| change | You will get `data` when every value of input is changed. |
 
 #### Input
 
 | props | usage |
 |-------|-------|
-| isError | You cans control `isError` using `props`. |
-| rule | The rule of checking data. |
-| type | Type of the input. `default: text`. |
+| rules | The array of rule using to check data. Every rule is an object of `validator` and `message`. `validator` is function or string to check data. `message` will show when `validator` return false. |
 | title | Title of input. |
-| message | This will show when `isError` is true. |
+| titleStyle | Style of title. |
+| messageStyle | Style of message. |
 
-- rule
+- validator
   - `not empty`: check if value is empty.
   - `email`: check if value is email.
   - `file`: check if file have size.
-- type
-  - all type of `input`
-  - `textarea`
+  - You can write a function to check data.
+
+  ```javascript
+  rules={[{
+    validator: 'not empty',
+    message: 'Can not be empty'
+  }, {
+    validator: e => {
+      if(e.target.value === '1')
+        return false;
+      return true;
+    },
+    message: 'test'
+  }]}
+  ```
+
+- You can not only use type of `input` in `html5`, but alos you can use `textarea`.
 
 ## Develop
 

@@ -15,6 +15,9 @@ export default class Input extends React.Component {
     placeholder: React.PropTypes.string,
     value: React.PropTypes.string,
     defaultValue: React.PropTypes.string,
+    style: React.PropTypes.object,
+    titleStyle: React.PropTypes.object,
+    messageStyle: React.PropTypes.object,
     title: React.PropTypes.string.isRequired,
     message: React.PropTypes.string,
     rule: React.PropTypes.string,
@@ -63,18 +66,18 @@ export default class Input extends React.Component {
   }
 
   render() {
-    const {title, message, rule} = this.props;
+    const {title, message, rule, titleStyle, messageStyle} = this.props;
     const {isError} = this.state;
 
     return (
       <div style={style.root}>
-        <h4 style={style.title(isError || this.props.isError)}>
+        <h4 style={[style.title(isError || this.props.isError), titleStyle]}>
           <font style={style.isRequired(rule)}>*</font>
           {title}
         </h4>
         {this.getComponent()}
         <div style={style.message.root}>
-          <p style={style.message.text(isError || this.props.isError)}>{message}</p>
+          <p style={[style.message.text(isError || this.props.isError), messageStyle]}>{message}</p>
         </div>
       </div>
     );
@@ -129,6 +132,8 @@ export default class Input extends React.Component {
     delete props.title;
     delete props.message;
     delete props.isError;
+    delete props.titleStyle;
+    delete props.messageStyle;
 
     switch(props.type) {
       case 'textarea':
@@ -147,9 +152,8 @@ export default class Input extends React.Component {
         break;
     }
 
-    const newProps = Object.assign({
-      style: propsStyle
-    }, props, {
+    const newProps = Object.assign({}, props, {
+      style: [propsStyle, props.style],
       onChange: this.onChange,
       onBlur: this.onBlur
     });

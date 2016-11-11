@@ -58,20 +58,20 @@ class Example extends React.Component {
 
 | props | usage |
 |-------|-------|
-| rules | The array of rule using to check data. Every rule is an object of `validator` and `message`. `validator` is function or string to check data. `message` will show when `validator` return false. |
+| rules | The array of rule using to check data. Every rule is an object of `validator` and `message`. `validator` is function or string to check data. `message` will show when `validator` return false. You can also use `options` when you need. |
 | title | Title of input. |
 | titleStyle | Style of title. |
 | messageStyle | Style of message. |
 
 - validator
-  - `not empty`: check if value is empty.
-  - `email`: check if value is email.
-  - `file`: check if file have size.
+  - Use [validator](https://www.npmjs.com/package/validator).
+  - `isEmail`: Use `validator.normalizeEmail`(not `validator.isEmail`).
+  - `isFile`: Use to check file.
   - You can write a function to check data.
 
   ```javascript
   rules={[{
-    validator: 'not empty',
+    validator: 'isEmpty',
     message: 'Can not be empty'
   }, {
     validator: e => {

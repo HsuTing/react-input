@@ -24,7 +24,7 @@ export default class Index extends React.Component {
           <Input title="Text(can not empty and be equal to 1)"
                  placeholder="text"
                  rules={[{
-                   validator: 'not empty',
+                   validator: 'isEmpty',
                    message: 'Can not be empty'
                  }, {
                    validator: e => {
@@ -39,7 +39,7 @@ export default class Index extends React.Component {
                  title="Email"
                  placeholder="email"
                  rules={[{
-                   validator: 'email',
+                   validator: 'isEmail',
                    message: 'Invalid email'
                  }]}
           />
@@ -47,7 +47,7 @@ export default class Index extends React.Component {
                  title="File"
                  placeholder="file"
                  rules={[{
-                   validator: 'file',
+                   validator: 'isFile',
                    message: 'no file'
                  }]}
                  id="file"
@@ -56,7 +56,7 @@ export default class Index extends React.Component {
                  title="Textarea"
                  placeholder="textarea"
                  rules={[{
-                   validator: 'not empty',
+                   validator: 'isByteLength',
                    message: 'Can not be empty'
                  }]}
           />

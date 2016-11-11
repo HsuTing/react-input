@@ -171,47 +171,47 @@ export default class Input extends React.Component {
       let uploadInfo = '';
       let isError = false;
       let message = '';
+      let value = e.target.value;
 
       rules.forEach(rule => {
         if(isError)
           return;
 
-        switch(rule.validator) {
-          case 'not empty':
-            isError = validator.isEmpty(e.target.value);
-            break;
+        if(typeof rule.validator === 'string') {
+          invariant(validator[rule.validator], `${rule.validator} is not in validator. You can write a function to use.`)
 
-          case 'email': {
-            const email = validator.normalizeEmail(e.target.value);
-            if(!email)
-              isError = true;
-            break;
-          }
-
-          case 'file':
-            if(e.target.files.length !== 0) {
-              const file = e.target.files[0];
-
-              if(file.size === 0)
+          switch(rule.validator) {
+            case 'isEmail':
+              if(!validator.normalizeEmail(value, rule.options))
                 isError = true;
+              break;
 
-              uploadInfo = `${file.name} (${Math.round(file.size * 0.001)} KB)`;
-            } else
-              isError = true;
-            break;
+            case 'isFile':
+              if(e.target.files.length !== 0) {
+                const file = e.target.files[0];
 
-          default:
-            isError = rule.validator(e) || false;
-            break;
-        }
+                if(file.size === 0)
+                  isError = true;
+
+                uploadInfo = `${file.name} (${Math.round(file.size * 0.001)} KB)`;
+              } else
+                isError = true;
+              break;
+
+            default:
+              isError = validator[rule.validator](value, rule.options);
+              break;
+          }
+        } else
+          isError = rule.validator(e) || false;
 
         if(isError)
           message = rule.message;
       });
 
-      func({value: e.target.value, isError, e});
+      func({value, isError, e});
 
-      this.setState({isError, uploadInfo, message, value: e.target.value});
+      this.setState({isError, uploadInfo, message, value});
     };
   }
 }

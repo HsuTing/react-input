@@ -1,6 +1,6 @@
 # React-input
 
-This is use [radium](https://github.com/FormidableLabs/radium) to make react input.
+This project uses [radium](https://github.com/FormidableLabs/radium) to make react input.
 
 ## Getting Started
 

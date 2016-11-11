@@ -56,7 +56,7 @@ export default class Index extends React.Component {
                  title="Textarea"
                  placeholder="textarea"
                  rules={[{
-                   validator: 'isByteLength',
+                   validator: 'isEmpty',
                    message: 'Can not be empty'
                  }]}
           />

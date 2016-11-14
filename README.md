@@ -17,6 +17,7 @@ npm install git+https://github.com/HsuTing/react-input.git --save
 
 - Form
 - Input
+- Select
 
 #### Example
 

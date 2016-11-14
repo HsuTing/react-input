@@ -6,6 +6,7 @@ import Style from 'componentsShare/Style';
 
 import Input from './Input';
 import Form from './Form';
+import Select from './Select';
 
 import style from './style/index';
 
@@ -59,6 +60,12 @@ export default class Index extends React.Component {
                    validator: 'isEmpty',
                    message: 'Can not be empty'
                  }]}
+          />
+          <Select title="Select"
+                  rules={[{
+                    validator: 'isEmpty',
+                    message: 'Can not be empty'
+                  }]}
           />
         </Form>
       </div>

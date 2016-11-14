@@ -16,10 +16,11 @@ export default class Input extends React.Component {
     onChange: React.PropTypes.func,
     onBlur: React.PropTypes.func,
     value: React.PropTypes.string,
+    children: React.PropTypes.node,
     style: React.PropTypes.object,
     titleStyle: React.PropTypes.object,
     messageStyle: React.PropTypes.object,
-    title: React.PropTypes.string.isRequired,
+    title: React.PropTypes.string,
     rules: React.PropTypes.arrayOf(
       React.PropTypes.shape({
         validator: React.PropTypes.oneOfType([
@@ -73,7 +74,7 @@ export default class Input extends React.Component {
   }
 
   render() {
-    const {title, rules, titleStyle, messageStyle} = this.props;
+    const {title, rules, titleStyle, messageStyle, children} = this.props;
     const {isError, message} = this.state;
 
     return (
@@ -83,6 +84,7 @@ export default class Input extends React.Component {
           {title}
         </h4>
         {this.getComponent()}
+        {children}
         <div style={style.message.root}>
           <p style={[style.message.text(isError), messageStyle]}>{message}</p>
         </div>
@@ -137,6 +139,7 @@ export default class Input extends React.Component {
     delete props.title;
     delete props.titleStyle;
     delete props.messageStyle;
+    delete props.children;
 
     switch(props.type) {
       case 'textarea':

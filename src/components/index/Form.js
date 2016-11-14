@@ -4,6 +4,7 @@ import React from 'react';
 import radium from 'radium';
 
 import Input from './Input';
+import Select from './Select';
 
 @radium
 export default class Form extends React.Component {
@@ -34,6 +35,7 @@ export default class Form extends React.Component {
   render() {
     const {data} = this.state;
     const props = {...this.props};
+    let count = 0;
 
     delete props.data;
     delete props.change;
@@ -41,12 +43,15 @@ export default class Form extends React.Component {
     return (
       <form {...props}>
         {React.Children.map(this.props.children, (node, index) => {
-          if(node.type.displayName !== React.createElement(Input, {title: 'title', type: 'text'}).type.displayName)
+          if(node.type.displayName !== React.createElement(Input, {title: 'title', type: 'text'}).type.displayName &&
+             node.type.displayName !== React.createElement(Select, {title: 'title'}).type.displayName) {
+            count = count - 1;
             return node;
+          }
 
           return React.cloneElement(node, {
-            value: data[index].value,
-            onChange: this.changeData(index, node.props.onChange)
+            value: data[index + count].value,
+            onChange: this.changeData(index + count, node.props.onChange)
           });
         })}
       </form>
@@ -55,11 +60,18 @@ export default class Form extends React.Component {
 
   getDefaultData() {
     const {data} = this.props;
+    let count = 0;
 
     return React.Children.map(this.props.children, (node, index) => {
+      if(node.type.displayName !== React.createElement(Input, {title: 'title', type: 'text'}).type.displayName &&
+         node.type.displayName !== React.createElement(Select, {title: 'title'}).type.displayName) {
+        count = count - 1;
+        return null;
+      }
+
       return {
-        value: data[index] ? data[index].value || '' : '',
-        isError: data[index] ? data[index].isError || false : false
+        value: data[index + count] ? data[index + count].value || '' : '',
+        isError: data[index + count] ? data[index + count].isError || false : false
       };
     });
   }

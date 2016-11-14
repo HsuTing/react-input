@@ -5,5 +5,6 @@ export const data = [
   {value: ''},
   {value: '3'},
   {value: ''},
-  {value: '5'}
+  {value: '5'},
+  {value: '6'}
 ];

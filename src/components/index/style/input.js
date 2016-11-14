@@ -67,7 +67,8 @@ export default {
 
   message: {
     root: {
-      position: 'relative'
+      position: 'relative',
+      zIndex: '1'
     },
 
     text: isError => {

@@ -85,6 +85,10 @@ class Example extends React.Component {
 
 - You can not only use type of `input` in `html5`, but alos you can use `textarea`.
 
+#### Select
+
+You can do all things like `Input`. The only different thing is `Select` need to have childrens and every children need to have a key which is used to be as value.
+
 ## Develop
 
 First, install packages using [yarn](https://yarnpkg.com/) (we assume you have pre-installed [npm](https://www.npmjs.com/) and [node.js](https://nodejs.org/)).

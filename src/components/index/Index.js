@@ -63,10 +63,18 @@ export default class Index extends React.Component {
           />
           <Select title="Select"
                   rules={[{
-                    validator: 'isEmpty',
-                    message: 'Can not be empty'
+                    validator: e => {
+                      if(e.target.value === '1')
+                        return true;
+                      return false;
+                    },
+                    message: 'test'
                   }]}
-          />
+          >
+            <div key="1">1</div>
+            <div key="2">2</div>
+            <div key="3">3</div>
+          </Select>
         </Form>
       </div>
     );

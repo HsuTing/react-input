@@ -21,6 +21,7 @@ export default class Input extends React.Component {
     titleStyle: React.PropTypes.object,
     messageStyle: React.PropTypes.object,
     title: React.PropTypes.string,
+    directValue: React.PropTypes.string,
     rules: React.PropTypes.arrayOf(
       React.PropTypes.shape({
         validator: React.PropTypes.oneOfType([
@@ -68,6 +69,16 @@ export default class Input extends React.Component {
               size: 0
             }
           ]
+        }
+      });
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.directValue && nextProps.directValue !== this.state.value) {
+      this.validator(this.props.onChange)({
+        target: {
+          value: nextProps.directValue
         }
       });
     }
@@ -140,6 +151,7 @@ export default class Input extends React.Component {
     delete props.titleStyle;
     delete props.messageStyle;
     delete props.children;
+    delete props.directValue;
 
     switch(props.type) {
       case 'textarea':

@@ -4,9 +4,9 @@ This project uses [radium](https://github.com/FormidableLabs/radium) to make rea
 
 ## Getting Started
 
-```
-npm install react --save
-npm install git+https://github.com/HsuTing/react-input.git --save
+```bash
+yarn add react
+yarn add git+https://github.com/HsuTing/react-input.git
 ```
 
 ## Usage

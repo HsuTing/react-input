@@ -193,8 +193,6 @@ export default class Input extends React.Component {
           return;
 
         if(typeof rule.validator === 'string') {
-          invariant(validator[rule.validator], `${rule.validator} is not in validator. You can write a function to use.`)
-
           switch(rule.validator) {
             case 'isEmail':
               if(!validator.normalizeEmail(value, rule.options))
@@ -214,6 +212,8 @@ export default class Input extends React.Component {
               break;
 
             default:
+              invariant(validator[rule.validator], `${rule.validator} is not in validator. You can write a function to use.`)
+
               isError = validator[rule.validator](value, rule.options);
               break;
           }
